@@ -1,0 +1,247 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Bun + Vite + React + shadcn/ui + TypeScript Template - Cursor Rules
+
+## Project Overview
+
+This template combines modern React development tools:
+- **Bun** - Fast JavaScript runtime and package manager
+- **Vite** - Lightning fast build tool and dev server
+- **React 19** - Latest React with TypeScript support
+- **shadcn/ui** - Beautiful, accessible component library
+- **Tailwind CSS v4** - Utility-first CSS framework with modern features
+
+## Project Structure
+
+```
+src/
+├── components/          # React components
+│   └── ui/             # shadcn/ui components (auto-generated)
+├── lib/                # Utility functions
+│   └── utils.ts        # cn() utility and helpers
+├── App.tsx             # Main application component
+├── index.css           # Global styles and Tailwind config
+└── main.tsx            # Application entry point
+```
+
+## Development Conventions
+
+### File Organization
+- Use **PascalCase** for component files: `MyComponent.tsx`
+- Use **camelCase** for utility files: `utils.ts`, `helpers.ts`
+- Place reusable components in `src/components/`
+- Keep shadcn/ui components in `src/components/ui/` (auto-managed)
+
+### Import Conventions
+```typescript
+// Always use path aliases
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { MyComponent } from "@/components/MyComponent"
+
+// Group imports: external → internal → relative
+import React from "react"
+import { Button } from "@/components/ui/button"
+import "./Component.css"
+```
+
+### TypeScript Guidelines
+- Enable strict mode (already configured)
+- Use proper typing for props and state
+- Leverage path aliases with `@/` prefix
+- Export types when needed for reusability
+
+### Component Structure
+```typescript
+// Preferred component structure
+interface ComponentProps {
+  children?: React.ReactNode
+  className?: string
+  // ... other props
+}
+
+export function Component({ children, className, ...props }: ComponentProps) {
+  return (
+    <div className={cn("default-styles", className)} {...props}>
+      {children}
+    </div>
+  )
+}
+```
+
+## shadcn/ui Integration
+
+### Adding Components
+```bash
+# Add individual components
+bunx --bun shadcn@latest add button
+bunx --bun shadcn@latest add input
+bunx --bun shadcn@latest add dialog
+
+# Add multiple components
+bunx --bun shadcn@latest add button input dialog card
+```
+
+### Available Components
+Common components to add:
+- `button` - Interactive buttons with variants
+- `input` - Form input fields
+- `dialog` - Modal dialogs and overlays
+- `card` - Content containers
+- `form` - Form components with validation
+- `table` - Data tables
+- `select` - Dropdown selectors
+- `checkbox` - Checkboxes and radio buttons
+- `toast` - Notification toasts
+- `sheet` - Side panels and drawers
+
+### Component Customization
+- Modify components in `src/components/ui/` if needed
+- Use `cn()` utility for conditional styling
+- Extend component props for additional functionality
+
+## Styling Guidelines
+
+### Tailwind CSS v4 Features
+- Use modern color functions: `oklch()` values
+- Leverage CSS custom properties for theming
+- Use `@theme inline` for component-specific tokens
+- Apply `@layer base` for global styles
+
+### Color System
+```css
+/* Light mode variables */
+--background: oklch(1 0 0)
+--foreground: oklch(0.145 0 0)
+--primary: oklch(0.205 0 0)
+
+/* Dark mode (automatically applied with .dark class) */
+.dark {
+  --background: oklch(0.145 0 0)
+  --foreground: oklch(0.985 0 0)
+}
+```
+
+### Styling Best Practices
+- Use semantic color tokens: `bg-background`, `text-foreground`
+- Prefer component variants over custom CSS when possible
+- Use `cn()` for conditional classes
+- Follow mobile-first responsive design
+
+## Development Scripts
+
+### Essential Commands
+```bash
+# Start development server
+bun run dev
+
+# Build for production
+bun run build
+
+# Preview production build
+bun run preview
+
+# Run linting
+bun run lint
+
+# Install dependencies
+bun install
+
+# Add shadcn/ui components
+bunx --bun shadcn@latest add [component-name]
+```
+
+### Development Workflow
+1. Start with `bun run dev` for hot reloading
+2. Add components with shadcn/ui CLI
+3. Build with `bun run build` before deployment
+4. Preview production build with `bun run preview`
+
+## Configuration Files
+
+### Key Configurations
+- `vite.config.ts` - Build tool configuration with path aliases
+- `tsconfig.json` & `tsconfig.app.json` - TypeScript configuration
+- `components.json` - shadcn/ui component configuration
+- `package.json` - Dependencies and scripts
+
+### Path Aliases
+```typescript
+// Configured in tsconfig and vite.config.ts
+"@/*": ["./src/*"]
+
+// Usage in imports
+import { Button } from "@/components/ui/button"
+```
+
+## Performance Considerations
+
+### Bundle Optimization
+- Vite automatically handles code splitting
+- Tree-shaking eliminates unused code
+- Components are lazy-loaded when possible
+
+### Best Practices
+- Use React.lazy() for heavy components
+- Implement proper loading states
+- Optimize images and assets
+- Leverage Vite's built-in optimizations
+
+## Deployment
+
+### Build Output
+- Production files generated in `dist/` folder
+- Static assets optimized and fingerprinted
+- Ready for deployment to any static hosting
+
+### Recommended Hosting
+- **Vercel** - Zero-config deployments
+- **Netlify** - Drag-and-drop deployment
+- **GitHub Pages** - Free static hosting
+- Any static file server
+
+## Troubleshooting
+
+### Common Issues
+1. **Import errors** - Check path aliases in tsconfig
+2. **Styling issues** - Verify Tailwind CSS import in index.css
+3. **Component not found** - Ensure shadcn/ui component is installed
+4. **Build failures** - Check TypeScript errors and dependencies
+
+### Debug Commands
+```bash
+# Check dependencies
+bun install
+
+# Verify TypeScript configuration
+bun run tsc --noEmit
+
+# Check for linting issues
+bun run lint
+```
+
+## Extension Guidelines
+
+### Adding New Features
+1. Install dependencies with `bun add [package]`
+2. Update TypeScript types if needed
+3. Add new components following established patterns
+4. Test with `bun run dev` before building
+
+### Maintaining the Template
+- Keep dependencies updated regularly
+- Follow React and TypeScript best practices
+- Document any custom modifications
+- Test builds before major changes
+
+## Resources
+
+- [shadcn/ui Documentation](mdc:https:/ui.shadcn.com)
+- [Tailwind CSS v4 Docs](mdc:https:/tailwindcss.com)
+- [Vite Documentation](mdc:https:/vitejs.dev)
+- [React Documentation](mdc:https:/react.dev)
+- [Bun Documentation](mdc:https:/bun.sh/docs)
+
